@@ -1,0 +1,135 @@
+FunctionalcomponentDemo.js 
+import React from 'react';
+const Greeting = ({ name }) => {
+    return <h1>Hello, {name}!</h1>;
+};
+const FunctionalComponentDemo = () => {
+    return (
+        <div>
+            <Greeting name="Aditya Shirsat" />
+            <Greeting name="React Developer" />
+        </div>
+    );
+};
+export default FunctionalComponentDemo; 
+ClassComponentDemo.js
+import React, { Component } from 'react';
+class Greeting extends Component {
+    render() {
+        return <h1>Hello, {this.props.name}!</h1>;
+    }
+}
+class ClassComponentDemo extends Component {
+    render() {
+        return (
+            <div>
+                <Greeting name="aditya" />
+                <Greeting name="React Developer" />
+            </div>
+        );
+    }
+}
+export default ClassComponentDemo; 
+import React, { Component } from 'react'; 
+
+
+LifeCycleDemo.js
+class LifeCycleDemo extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { count: 0 };
+        console.log('Constructor: Component is being constructed.');
+    }
+    componentDidMount() {
+        console.log('ComponentDidMount: Component has mounted.');
+    }
+    componentDidUpdate(prevProps, prevState) {
+        console.log('ComponentDidUpdate: Component updated.');
+    }
+    componentWillUnmount() {
+        console.log('ComponentWillUnmount: Component is being unmounted.');
+    }
+    increment = () => {
+        this.setState({ count: this.state.count + 1 });
+    };
+    render() {
+        console.log('Render: Component is rendering.');
+        return (
+            <div>
+                <h1>Count: {this.state.count}</h1>
+                <button onClick={this.increment}>Increment</button>
+            </div>
+        );
+    }
+}
+export default LifeCycleDemo;
+
+
+MainContent.js
+import React from 'react';
+const MainContent = () => {
+    return (
+        <main>
+            <p>This is the main content of the application.</p>
+        </main>
+    );
+};
+export default MainContent;
+ 
+
+
+RenderingDemo.js
+import React, { useState } from 'react';
+const RenderingDemo = () => 
+const [count, setCount] = useState(0);
+    const increment = () => {
+        setCount(count + 1);
+    };
+    return (
+        <div>
+            <h1>Count: {count}</h1>
+            <button onClick={increment}>Increment</button>
+        </div>
+    );
+};
+export default RenderingDemo;
+
+
+
+App.js
+import React from 'react';
+import FunctionalComponentDemo from './components/FunctionalComponentDemo';
+import ClassComponentDemo from './components/ClassComponentDemo';
+import LifeCycleDemo from './components/LifeCycleDemo';
+import RenderingDemo from './components/RenderingDemo'; 
+const App = () => {
+    return (
+        <div>
+            <h1>React Demonstrations</h1>
+            <FunctionalComponentDemo />
+            <ClassComponentDemo />
+            <LifeCycleDemo />
+            <RenderingDemo />
+        </div>
+    );
+};
+export default App;
+
+
+
+Index.js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+<React.StrictMode>
+<App />
+</React.StrictMode>
+);
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();

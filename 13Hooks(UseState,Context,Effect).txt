@@ -1,0 +1,79 @@
+index.js
+import React from "react";
+import ReactDOM from "react-dom/client"; // Notice the change in import
+import App from "./App";
+import './index.css';
+
+// Create a root for concurrent rendering
+const root = ReactDOM.createRoot(document.getElementById("root")); // Corrected function name
+
+// Render the App component inside the root
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+
+App.js
+import React, { useState, useEffect, createContext, useContext } from "react";
+
+// 1. Create Context for global state
+const UserContext = createContext();
+
+// Component that uses useState
+const Counter = () => {
+  const [count, setCount] = useState(0); // useState for local state
+
+  useEffect(() => {
+    console.log("Component rendered or count changed:", count); // useEffect for side effect
+  }, [count]);
+
+  return (
+    <div>
+      <h2>Counter: {count}</h2>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <button onClick={() => setCount(count - 1)}>Decrement</button>
+    </div>
+  );
+};
+
+// Component that provides global state via Context
+const UserProvider = ({ children }) => {
+  const [user, setUser] = useState("Guest");
+
+  useEffect(() => {
+    // Simulate a fetch request to get user data
+    setTimeout(() => {
+      setUser("Aniket Kumar");
+    }, 2000);
+  }, []);
+
+  return (
+    <UserContext.Provider value={user}>
+      {children}
+    </UserContext.Provider>
+  );
+};
+
+// Component that consumes global state via useContext
+const UserProfile = () => {
+  const user = useContext(UserContext); // useContext to access global state
+
+  return <h2>User: {user}</h2>;
+};
+
+// Main Application Component
+const App = () => {
+  return (
+    <UserProvider>
+      <div>
+        <h1>React Hooks Example</h1>
+        <Counter />
+        <UserProfile />
+      </div>
+    </UserProvider>
+  );
+};
+
+export default App;

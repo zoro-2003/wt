@@ -1,0 +1,29 @@
+// myFunctions.js
+// A function to greet a user
+function greetUser(name) {
+    return `Hello, ${name}! Welcome to Node.js!`;
+}
+// A function to add two numbers
+function addNumbers(a, b) {
+    return a + b;
+}
+// A function to get the current date and time
+function getCurrentDateTime() {
+    return new Date().toLocaleString();
+}
+// Export functions to be used in other files
+module.exports = {
+    greetUser,
+    addNumbers,
+    getCurrentDateTime
+};
+
+
+// app.js
+const myFunctions = require('./myFuntions');
+// Call and display the result of greetUser
+// Call and display the result of addNumbers
+const result = myFunctions.addNumbers(10, 25);
+console.log(`The sum of 10 and 25 is: ${result}`);
+// Call and display the current date and time
+console.log(`Current date and time: ${myFunctions.getCurrentDateTime()}`);

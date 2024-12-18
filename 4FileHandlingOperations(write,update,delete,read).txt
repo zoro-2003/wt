@@ -1,0 +1,36 @@
+ const fs = require('fs');
+const filePath = 'example.txt';
+//  Create and write to a file
+fs.writeFileSync(filePath, 'This is the initial content.\n', (err) => {
+    if (err) {
+        console.error('Error creating/writing file:', err);
+    } else {
+        console.log('File created and written successfully!');
+    }
+});
+console.log('File created and initial content written.');
+//  Append to the file
+fs.appendFileSync(filePath, 'This is appended content.\n', (err) => {
+    if (err) {
+        console.error('Error appending to file:', err);
+    } else {
+        console.log('Content appended successfully!');
+    }
+});
+console.log('Content appended to the file.'); 
+//  Read the file
+try {
+    const data = fs.readFileSync(filePath, 'utf-8');
+    console.log('File content:\n', data);
+} catch (err) {
+    console.error('Error reading file:', err);
+} 
+//  Delete the file
+fs.unlink(filePath, (err) => {
+    if (err) {
+        console.error('Error deleting file:', err);
+    } else {
+        console.log('File deleted successfully.');
+    }
+});
+console.log('Delete operation performed.'); 

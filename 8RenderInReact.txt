@@ -1,0 +1,21 @@
+College1.js
+import React from 'react';
+class College1 extends React.Component {
+  render() {
+    return <div>
+     <h2>Aditya Shirsat C24111</h2>
+     <h2>Hi NMITD! this is a render example</h2>
+     </div>
+  }
+}
+export default College1;
+
+
+Index.js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import College1 from './College1.js';
+ 
+const container = document.getElementById('root');
+const root = ReactDOM.createRoot(container);
+root.render(<College1 />);

@@ -1,0 +1,26 @@
+// app.js 
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+// Use `os` module to get system information
+console.log('System Architecture:', os.arch());
+console.log('Platform:', os.platform());
+console.log('Total Memory:', os.totalmem(), 'bytes');
+console.log('Free Memory:', os.freemem(), 'bytes');
+console.log('CPU Info:', os.cpus());
+// Use `path` module to work with file paths
+const filePath = path.join(__dirname, 'example.txt');
+console.log('File Path:', filePath);
+console.log('Base Name:', path.basename(filePath));
+console.log('Directory Name:', path.dirname(filePath));
+console.log('Extension Name:', path.extname(filePath)); 
+const fileContent = 'Hello, this is an example of using system-defined functions in Node.js!';
+fs.writeFileSync('example.txt', fileContent, (err) => {
+    if (err) {
+        console.error('Error writing file:', err);
+    }
+});
+console.log('File created successfully!'); 
+// Read the contents of the file
+const data = fs.readFileSync('example.txt', 'utf-8');
+console.log('File Content:', data);

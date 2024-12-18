@@ -1,0 +1,105 @@
+index.js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import { BrowserRouter } from 'react-router-dom';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+root.render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
+);
+
+App.js
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Home from './Home';
+import About from './About';
+import Contact from './Contact';
+import ErrorBoundary from './ErrorBoundary';  // Import ErrorBoundary
+
+const App = () => {
+  return (
+    <ErrorBoundary>  {/* Wrap the Routes in ErrorBoundary */}
+      <div>
+        <h1>Welcome to My Journal</h1>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </div>
+    </ErrorBoundary>
+  );
+};
+
+export default App;
+
+Contact.js
+import React from 'react';
+
+const Contact = () => {
+  return (
+    <div>
+      <h2>Contact Page</h2>
+      <p>Feel free to contact us for any inquiries or support!</p>
+    </div>
+  );
+};
+
+export default Contact;
+
+ErrorBoundary.js
+import React, { Component } from 'react';
+
+class ErrorBoundary extends Component {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, info) {
+    console.log('Error caught by ErrorBoundary:', error);
+    console.log(info);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <h1>Something went wrong. Please try again later.</h1>;
+    }
+
+    return this.props.children;
+  }
+}
+
+export default ErrorBoundary;
+
+Home.js
+import React from 'react';
+
+const Home = () => {
+  return (
+    <div>
+      <h2>Home Page</h2>
+      <p>Welcome to the Home page! Here, you can see the main content of the journal.</p>
+    </div>
+  );
+};
+export default Home;
+
+About.js
+import React from 'react';
+const About = () => {
+  return (
+    <div>
+      <h2>About Page</h2>
+      <p>This is the about page of the Journal, where you can learn more about the project.</p>
+    </div>
+  );
+};
+export default About;

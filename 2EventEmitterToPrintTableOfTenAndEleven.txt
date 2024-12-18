@@ -1,0 +1,20 @@
+const EventEmitter = require('events'); 
+// Create an instance of EventEmitter
+const eventEmitter = new EventEmitter();
+// Function to print the multiplication table
+const printTable = (number) => {
+  console.log(`\nMultiplication Table for ${number}:`);
+for (let i = 1; i <= 10; i++) {
+    console.log(`${number} x ${i} = ${number * i}`);
+  }};
+// Register listeners for 'tableTen' and 'tableEleven' events
+eventEmitter.on('tableTen', () => {
+  printTable(10);
+})
+eventEmitter.on('tableEleven', () => {
+  printTable(11);
+});
+// Emit events to trigger the listeners and print the tables
+eventEmitter.emit('tableTen');
+eventEmitter.emit('tableEleven');
+console.log('\nTable printing completed.');

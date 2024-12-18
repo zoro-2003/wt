@@ -1,0 +1,125 @@
+index.js
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import "./index.css";
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+
+app.js
+import React from "react";
+import ClickEvent from "./components/ClickEvent";
+import ChangeEvent from "./components/ChangeEvent";
+import BlurEvent from "./components/BlurEvent";
+import KeyEvents from "./components/KeyEvents";
+
+function App() {
+  return (
+    <div>
+      <h1>React DOM Events</h1>
+      <ClickEvent />
+      <ChangeEvent />
+      <BlurEvent />
+      <KeyEvents />
+    </div>
+  );
+}
+export default App;
+
+
+IN COMPONENTS
+ClickEvent.js
+import React from "react";
+
+const ClickEvent = () => {
+  const handleClick = () => {
+    alert("Button clicked!");
+  };
+
+  return (
+    <div>
+      <h2>Click Event</h2>
+      <button onClick={handleClick}>Click Me</button>
+    </div>
+  );
+};
+export default ClickEvent;
+
+
+ChangeEvent.js
+import React, { useState } from "react";
+const ChangeEvent = () => {
+  const [text, setText] = useState("");
+
+  const handleChange = (e) => {
+    setText(e.target.value);
+  };
+
+  return (
+    <div>
+      <h2>Change Event</h2>
+      <input type="text" onChange={handleChange} value={text} />
+      <p>You typed: {text}</p>
+    </div>
+  );
+};
+export default ChangeEvent;
+
+
+
+BlurEvent.js
+import React, { useState } from "react";
+const BlurEvent = () => {
+  const [message, setMessage] = useState("");
+
+  const handleBlur = () => {
+    setMessage("Input lost focus!");
+  };
+
+  return (
+    <div>
+      <h2>Blur Event</h2>
+      <input type="text" onBlur={handleBlur} />
+      <p>{message}</p>
+    </div>
+  );
+};
+export default BlurEvent;
+
+
+
+KeyEvents.js
+import React, { useState } from "react";
+
+const KeyEvents = () => {
+  const [keyPressed, setKeyPressed] = useState("");
+  const [keyUp, setKeyUp] = useState("");
+
+  const handleKeyPress = (e) => {
+    setKeyPressed(e.key);
+  };
+
+  const handleKeyUp = (e) => {
+    setKeyUp(e.key);
+  };
+
+  return (
+    <div>
+      <h2>Keypress and Keyup Events</h2>
+      <input
+        type="text"
+        onKeyPress={handleKeyPress}
+        onKeyUp={handleKeyUp}
+        placeholder="Type something..."
+      />
+      <p>Key Pressed: {keyPressed}</p>
+      <p>Key Released: {keyUp}</p>
+    </div>
+  );
+};
+export default KeyEvents;

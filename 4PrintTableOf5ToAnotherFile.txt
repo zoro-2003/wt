@@ -1,0 +1,24 @@
+ const fs = require('fs');
+const sourceFile = 'tableOfFive.txt';
+const destinationFile = 'copiedTableOfFive.txt';
+// Generate the multiplication table of 5
+let tableContent = 'Multiplication Table of 5:\n';
+for (let i = 1; i <= 10; i++) {
+    tableContent += `5 x ${i} = ${5 * i}\n`;
+}
+// Write the table to the source file
+fs.writeFileSync(sourceFile, tableContent, (err) => {
+    if (err) {
+        console.error('Error writing to source file:', err);
+    } else {
+        console.log(`Table of 5 written to '${sourceFile}'.`);
+    }
+});
+// Copy the content from the source file to the destination file
+try {
+    const data = fs.readFileSync(sourceFile, 'utf-8'); // Read from the source file
+    fs.writeFileSync(destinationFile, data); // Write to the destination file
+    console.log(`Contents copied from '${sourceFile}' to '${destinationFile}' successfully!`);
+} catch (err) {
+    console.error('Error during file copy operation:', err);
+}

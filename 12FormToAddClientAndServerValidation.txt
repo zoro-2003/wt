@@ -1,0 +1,204 @@
+index.js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+
+
+Formvalidation.js
+import React, { useState } from "react";
+import axios from "axios";
+import * as yup from "yup";
+
+const FormWithValidation = () => {
+  const [formData, setFormData] = useState({ name: "", email: "", password: "" });
+  const [errors, setErrors] = useState({});
+  const [serverMessage, setServerMessage] = useState("");
+
+  // Client-side validation schema
+  const validationSchema = yup.object().shape({
+    name: yup.string().required("Name is required"),
+    email: yup.string().email("Invalid email").required("Email is required"),
+    password: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+  });
+
+  // Handle input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Client-side validation
+      await validationSchema.validate(formData, { abortEarly: false });
+      setErrors({}); // Clear previous errors
+
+      // Server-side validation
+      const response = await axios.post("http://localhost:5000/api/validate", formData);
+      setServerMessage(response.data.message); // Handle success
+    } catch (error) {
+      if (error.name === "ValidationError") {
+        // Handle client-side validation errors
+        const validationErrors = {};
+        error.inner.forEach((err) => {
+          validationErrors[err.path] = err.message;
+        });
+        setErrors(validationErrors);
+      } else if (error.response) {
+        // Handle server-side validation errors
+        setServerMessage(error.response.data.message);
+      }
+    }
+  };
+
+  return (
+    <div>
+      <h1>Form with Validation</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Name:</label>
+          <input type="text" name="name" value={formData.name} onChange={handleChange} />
+          {errors.name && <p className="error">{errors.name}</p>}
+        </div>
+
+        <div>
+          <label>Email:</label>
+          <input type="email" name="email" value={formData.email} onChange={handleChange} />
+          {errors.email && <p className="error">{errors.email}</p>}
+        </div>
+
+        <div>
+          <label>Password:</label>
+          <input type="password" name="password" value={formData.password} onChange={handleChange} />
+          {errors.password && <p className="error">{errors.password}</p>}
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+
+      {serverMessage && <p>{serverMessage}</p>}
+    </div>
+  );
+};
+
+export default FormWithValidation;
+
+Server,js
+import React, { useState } from "react";
+import axios from "axios";
+import * as yup from "yup";
+
+const FormWithValidation = () => {
+  const [formData, setFormData] = useState({ name: "", email: "", password: "" });
+  const [errors, setErrors] = useState({});
+  const [serverMessage, setServerMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");  // State to hold success message
+
+  // Client-side validation schema
+  const validationSchema = yup.object().shape({
+    name: yup.string().required("Name is required"),
+    email: yup.string().email("Invalid email").required("Email is required"),
+    password: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+  });
+
+  // Handle input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Client-side validation
+      await validationSchema.validate(formData, { abortEarly: false });
+      setErrors({}); // Clear previous errors
+
+      // Server-side validation
+      const response = await axios.post("http://localhost:5000/api/validate", formData);
+
+      // Handle success: Set the success message
+      setSuccessMessage("Successfully created!");
+      setServerMessage("");  // Clear server message
+      setFormData({ name: "", email: "", password: "" });  // Clear form fields after submission
+    } catch (error) {
+      if (error.name === "ValidationError") {
+        // Handle client-side validation errors
+        const validationErrors = {};
+        error.inner.forEach((err) => {
+          validationErrors[err.path] = err.message;
+        });
+        setErrors(validationErrors);
+      } else if (error.response) {
+        // Handle server-side validation errors
+        setServerMessage(error.response.data.message);
+      }
+    }
+  };
+
+  return (
+    <div>
+      <h1>Form with Validation</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Name:</label>
+          <input type="text" name="name" value={formData.name} onChange={handleChange} />
+          {errors.name && <p className="error">{errors.name}</p>}
+        </div>
+
+        <div>
+          <label>Email:</label>
+          <input type="email" name="email" value={formData.email} onChange={handleChange} />
+          {errors.email && <p className="error">{errors.email}</p>}
+        </div>
+
+        <div>
+          <label>Password:</label>
+          <input type="password" name="password" value={formData.password} onChange={handleChange} />
+          {errors.password && <p className="error">{errors.password}</p>}
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+
+      {successMessage && <p className="success">{successMessage}</p>} {/* Display success message */}
+      {serverMessage && <p className="error">{serverMessage}</p>} {/* Display server-side validation error */}
+    </div>
+  );
+};
+
+export default FormWithValidation;
+
+App.js
+import React from "react";
+import "./App.css";
+import FormWithValidation from "./components/FormWithValidation";
+
+function App() {
+  return (
+    <div className="App">
+      <FormWithValidation />
+    </div>
+  );
+}
+export default App;

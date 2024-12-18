@@ -1,0 +1,43 @@
+App.js
+import React, { useState } from "react";
+import CounterDisplay from "./components/CounterDisplay";
+import CounterControls from "./components/CounterControls";
+function App() {
+  const [count, setCount] = useState(0);
+  const increment = () => setCount(count + 1);
+  const decrement = () => setCount(count - 1);
+  return (
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h1>State and Props Example</h1>
+      <CounterDisplay count={count} />
+      <CounterControls increment={increment} decrement={decrement} />
+    </div>
+  );
+}
+export default App;
+index.js
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+ReactDOM.render(<App />, document.getElementById("root"));
+Componentfolder
+1)CounterControls.js
+import React from "react";
+function CounterControls({ increment, decrement }) {
+  return (
+    <div>
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+      <label> Name : Aditya Shirsat C24111</label>
+    </div>
+  );
+}
+export default CounterControls;
+2)CounterDisplay.js
+import React from "react";
+
+function CounterDisplay({ count }) {
+  return <h2>Current Count: {count}</h2>;
+}
+
+export default CounterDisplay;

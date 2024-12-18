@@ -1,0 +1,188 @@
+const mysql = require('mysql');
+
+const con = mysql.createConnection({
+    host: "localhost",
+    user: "root",      
+    password: "",      
+    database: "Library" 
+});
+
+con.connect(function (err) {
+    if (err) throw err;
+    console.log("Connected to MySQL!");
+
+    con.query("CREATE DATABASE IF NOT EXISTS Library", function (err, result) {
+        if (err) throw err;
+        console.log("Library database created or already exists.");
+
+        con.query("USE Library", function (err, result) {
+            if (err) throw err;
+
+            
+            const createTableQuery = `
+                CREATE TABLE IF NOT EXISTS Books (
+                    id INT AUTO_INCREMENT PRIMARY KEY,  -- Marking id as the primary key
+                    title VARCHAR(255) NOT NULL,
+                    author VARCHAR(255),
+                    year INT,
+                    genre VARCHAR(100),
+                    location VARCHAR(100)
+                )
+            `;
+
+            con.query(createTableQuery, function (err, result) {
+                if (err) throw err;
+                console.log("Books table created or already exists.");
+                con.end(); 
+            });
+        });
+    });
+});
+
+
+
+
+
+
+const mysql = require('mysql');
+
+const con = mysql.createConnection({
+    host: "localhost",
+    user: "root",      
+    password: "",      
+    database: "Library" 
+});
+
+con.connect(function (err) {
+    if (err) throw err;
+    console.log("Connected to the Library database!");
+
+    
+    const insertRecordsQuery = `
+        INSERT INTO Books (title, author, year, genre, location)
+        VALUES
+        ('The Great Gatsby', 'F. Scott Fitzgerald', 1925, 'Novel', 'New York'),
+        ('To Kill a Mockingbird', 'Harper Lee', 1960, 'Fiction', 'Chicago'),
+        ('1984', 'George Orwell', 1949, 'Dystopian', 'Delhi'),
+        ('The Catcher in the Rye', 'J.D. Salinger', 1951, 'Fiction', 'Mumbai'),
+        ('Moby Dick', 'Herman Melville', 1851, 'Adventure', 'Delhi'),
+        ('War and Peace', 'Leo Tolstoy', 1869, 'Historical Fiction', 'Delhi'),
+        ('Pride and Prejudice', 'Jane Austen', 1813, 'Romance', 'Kolkata'),
+        ('The Odyssey', 'Homer', '800 BC', 'Epic', 'Mumbai'),
+        ('The Alchemist', 'Paulo Coelho', 1988, 'Adventure', 'Delhi'),
+        ('The Hobbit', 'J.R.R. Tolkien', 1937, 'Fantasy', 'Mumbai')
+    `;
+
+    con.query(insertRecordsQuery, function (err, result) {
+        if (err) throw err;
+        console.log(`${result.affectedRows} records inserted into the Books table.`);
+
+        
+        con.end(function (err) {
+            if (err) throw err;
+            console.log("Connection closed.");
+        });
+    });
+});
+
+
+
+const mysql = require('mysql');
+
+const con = mysql.createConnection({
+    host: "localhost",
+    user: "root",      
+    password: "",      
+    database: "Library" 
+});
+
+con.connect(function (err) {
+    if (err) throw err;
+    console.log("Connected to the Library database!");
+
+    
+    const selectRecordsQuery = "SELECT * FROM Books";
+    
+    con.query(selectRecordsQuery, function (err, results, fields) {
+        if (err) throw err;
+        console.log("Books Table Records:");
+        console.table(results);  
+
+        
+        con.end(function (err) {
+            if (err) throw err;
+            console.log("Connection closed.");
+        });
+    });
+});
+
+
+
+const mysql = require('mysql');
+
+const con = mysql.createConnection({
+    host: "localhost",
+    user: "root",      
+    password: "",      
+    database: "Library" 
+});
+
+con.connect(function (err) {
+    if (err) throw err;
+    console.log("Connected to the Library database!");
+
+    
+    const updateLocationQuery = "UPDATE Books SET location = 'Mumbai' WHERE location = 'Delhi'";
+
+    con.query(updateLocationQuery, function (err, result) {
+        if (err) throw err;
+        console.log(`${result.affectedRows} records updated.`);
+
+        
+        const selectRecordsQuery = "SELECT * FROM Books";
+
+        con.query(selectRecordsQuery, function (err, results, fields) {
+            if (err) throw err;
+            console.log("Updated Books table:");
+            console.table(results);  
+
+            con.end(function (err) {
+                if (err) throw err;
+                console.log("Connection closed.");
+            });
+        });
+    });
+});
+
+
+
+
+
+
+const mysql = require('mysql');
+
+const con = mysql.createConnection({
+    host: "localhost",
+    user: "root",      
+    password: "",      
+    database: "Library" 
+});
+
+con.connect(function (err) {
+    if (err) throw err;
+    console.log("Connected to the Library database!");
+
+    
+    const deleteRecordsQuery = "DELETE FROM Books";
+
+    con.query(deleteRecordsQuery, function (err, result) {
+        if (err) throw err;
+        console.log(`${result.affectedRows} records deleted.`);
+
+        
+        con.end(function (err) {
+            if (err) throw err;
+            console.log("Connection closed.");
+        });
+    });
+});

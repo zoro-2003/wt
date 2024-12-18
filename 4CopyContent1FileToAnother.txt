@@ -1,0 +1,7 @@
+const fs = require('fs');
+//create a txt file of source
+// Copy content from source.txt to destination.txt
+fs.copyFile('source.txt', 'destination.txt', (err) => {
+    if (err) throw err;
+    console.log('File copied successfully!');
+});

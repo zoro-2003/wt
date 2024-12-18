@@ -1,0 +1,12 @@
+This is a College.js 
+function College(){
+    return <div>
+        <h2>Aditya Shirsat C24111</h2>
+        <h2>this is the college function which is from anthor file</h2>
+        </div>; }
+export default College;
+this is a index.js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import College from './College';
+const root = ReactDOM.createRoot(document.getElementById('root'));root.render(<College/>);

@@ -1,0 +1,8 @@
+function printTable(number) {
+    console.log(`Multiplication Table of ${number}:`);
+    for (let i = 1; i <= 10; i++) {
+        console.log(`${number} x ${i} = ${number * i}`);
+    }
+}
+// Call the function with 15 as an argument
+printTable(15);

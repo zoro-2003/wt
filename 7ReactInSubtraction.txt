@@ -1,0 +1,8 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+const myElement= <div>
+    <h2>Aditya Shirsat C24111 </h2>
+    <h1>subtraction of 10 -2 is {10-2}. this is with JSX</h1>
+    </div>
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(myElement);
